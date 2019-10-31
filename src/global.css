@@ -1,0 +1,21 @@
+/* All the global variables and rules are set here. */
+html, body {
+    top: 0;
+    height: 100%;
+    width: 100%;
+    min-width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, p {
+    margin: 0;
+}
+
+#root {
+    height: 100%;
+    width: 100%;
+    background-color: cornflowerblue;
+}
+

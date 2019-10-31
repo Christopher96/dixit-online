@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import "./Welcome.css";
+import "./game.css";
 
-class Welcome extends Component {
+class Game extends Component {
   render() {
     return (
       <div className="Welcome">
@@ -16,4 +16,4 @@ class Welcome extends Component {
   }
 }
 
-export default Welcome;
+export default Game;
