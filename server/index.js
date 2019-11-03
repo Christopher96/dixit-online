@@ -1,14 +1,9 @@
-/*
- * Routes related to profile activites like following/unfollowing profiles
- */
-
 // Defines required modules
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const path = require('path')
-const file = require('file')
 
 // Get express and the router
 const app = express()
@@ -29,7 +24,7 @@ db.on('error', function(err) {
 
 // Set host and port to environment variables or default values
 const host = process.env.HOST || 'localhost'
-const port = process.env.PORT || '1337'
+const port = process.env.PORT || '8080'
 
 // Parse json responses and allow requests from any domain
 app.use(bodyParser.json())

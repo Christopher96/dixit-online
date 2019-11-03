@@ -22,5 +22,6 @@
         "eject": "react-scripts eject",
         "server": "nodemon server"
     },
-    "devDependencies": {}
+    "devDependencies": {},
+    "proxy": "http://localhost:8080"
 }
