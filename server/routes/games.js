@@ -30,7 +30,7 @@ router.post('/create', (req, res, next) => {
             let game = new Game({ gameid })
             game.save(function (err) {
                 if (err) return res.status(500)
-                return res.status(200).send(`Game was created`)
+                return res.status(200).json(game)
             })
         })
         .catch((e) => res.status(500).send(e))

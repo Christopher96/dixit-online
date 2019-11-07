@@ -46,6 +46,5 @@ app.on('listening', function() {
 
 // Exit properly on CTRL-C
 process.on('SIGINT', () => {
-    console.log("Bye bye!")
     process.exit()
 })

@@ -1,10 +1,14 @@
-import React, {Component} from "react";
-import {Route} from "react-router-dom";
+import React, { Component } from "react";
+import { Route } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+
+import GameSetup from "./gameSetup/gameSetup";
 import Game from "./game/game";
+
+import modelInstance from "./data/DixitModel";
+
 import "./app.css";
 import "./global.css";
-import { BrowserRouter } from "react-router-dom";
-import GameSetup from "./gameSetup/gameSetup";
 
 class App extends Component {
     constructor(props) {
@@ -17,15 +21,15 @@ class App extends Component {
     render() {
         return (
             <BrowserRouter>
-                <div id='routers'>
-                    <Route
-                        path='/:username'
-                        component={Game}
-                    />
-                    <Route
-                        exact path='/'
-                        component={GameSetup}
-                    />
+                <div className="routes">
+                <Route
+                    path='/:gameid'
+                    render={({ match }) => <Game model={modelInstance} gameid={match.params.gameid} />}
+                />
+                <Route
+                    exact path='/'
+                    render={({ history }) => <GameSetup model={modelInstance} history={history} />}
+                />
                 </div>
             </BrowserRouter>
         );
