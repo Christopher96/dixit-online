@@ -41,6 +41,8 @@ class Game extends Component {
     }
 
     render() {
+        let { game } = this.context
+
         let content = null
 
         switch(this.state.status) {
