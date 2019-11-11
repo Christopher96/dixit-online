@@ -31,7 +31,7 @@ class GameSetup extends Component{
 
     createGame = (e) => {
         this.props.model
-            .createGame(this.state.createGameName)
+            .createGame(this.state.createGameName, this.state.players)
             .then(res => {
                 if(!res.error) {
                     this.props.history.push(res.gameid)

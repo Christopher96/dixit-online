@@ -40,8 +40,8 @@ class DixitModel extends ObservableModel {
         }).then(this.processResponse);
     }
 
-    createGame(gameid) {
-        return this.post('/games/create', { gameid });
+    createGame(gameid, players) {
+        return this.post('/games/create', { gameid, players });
     }
 
     getGame(gameid) {
