@@ -15,7 +15,9 @@ router.get('/:gameid', (req, res, next) => {
         .finally(() => {
             return res.status(404).send(`Game with ID '${gameid}' was not found.`)
         })
-        .catch((e) => res.status(500).send(e))
+        .catch((e) => {
+            return res.status(500).send(e)
+        })
 })
 
 router.post('/create', (req, res, next) => {
@@ -33,7 +35,9 @@ router.post('/create', (req, res, next) => {
                 return res.status(200).json(game)
             })
         })
-        .catch((e) => res.status(500).send(e))
+        .catch((e) => {
+            return res.status(500).send(e)
+        })
 })
 
 module.exports = router
