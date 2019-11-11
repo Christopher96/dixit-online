@@ -44,22 +44,27 @@ class Game extends Component {
             case "LOADED":
                 let players = game.players.map((player, i) => {
                     let isCurrent = game.currentPlayer == i;
-                    return 
+                    return (
                         <tr key={i} className={isCurrent ? 'current' : ''}>
                             <td>{player.name}</td>
                             <td>{player.score}</td>
                         </tr>
+                    )
                 })
                 content = 
                     <div id="game">
                         <p className="gameName">{this.props.gameid}</p>
                         <div className="sidebar">
                             <table className="players">
+                                <thead>
                                 <tr>
                                     <th>Player</th>
                                     <th>Score</th>
                                 </tr>
+                                </thead>
+                                <tbody>
                                 {players}
+                                </tbody>
                             </table>
                         </div>
                         <div className="field">

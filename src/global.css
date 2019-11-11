@@ -16,6 +16,7 @@ h1, h2, h3, h4, p {
 #root {
     height: 100%;
     width: 100%;
-    background-color: cornflowerblue;
+    background-color: #005257;
+    background-image: url("images/background_game_setup_v2_reduced.jpg");
 }
 
