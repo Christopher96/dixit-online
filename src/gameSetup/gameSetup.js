@@ -14,7 +14,7 @@ class GameSetup extends Component{
             createGameName: "",
             continueError: "",
             continueGameName: "",
-            numberPlayers: 3,
+            players: ['', '', '']
         }
     }
 
@@ -57,8 +57,57 @@ class GameSetup extends Component{
             })
     }
 
+    changePlayerName = (index) => (evt) => {
+        evt.preventDefault()
+        let name = evt.target.value
+        let newPlayers = this.state.players.slice()
+        newPlayers[index] = name
+        this.setState({players: newPlayers})
+    }
+
+
+    addPlayer = (evt) => {
+        evt.preventDefault()
+        if (this.state.players.length < 8) {
+            let newPlayers = this.state.players.slice()
+            newPlayers.push('')
+            this.setState({players: newPlayers})
+        } else {
+            this.setState({createError: "Can't add more than 8 players."})
+        }
+    }
+
+    removePlayer = (index) => (evt) => {
+        evt.preventDefault()
+        if (this.state.players.length > 3) {
+            let newPlayers = this.state.players.slice()
+            newPlayers.splice(index, 1)
+            this.setState({players: newPlayers})
+        } else {
+            this.setState({createError: "Can't have fewer than 3 players."})
+        }
+    }
+
+    playerInfo = (name, index) => {
+        let removeButton = (this.state.players.length > 3) ? <button onClick={this.removePlayer(index)}>x</button> : '';
+
+        return (
+            <div className='formEntry' key={index}>
+                <label htmlFor={`player${index}`}>Player {index + 1}:</label>
+                <input type='text' id={`player${index}`} value={name} key={index}
+                       onChange={this.changePlayerName(index)}/>
+                {removeButton}
+            </div>
+        )
+    }
+
+    playersInfos = () => {
+        return this.state.players.map(this.playerInfo)
+    }
+
 
     render() {
+        let addButton = (this.state.players.length < 8) ? <button onClick={this.addPlayer}>+ add player</button> : '';
         return (
             <div id='setup'>
                 <h2>Create a new game:</h2>
@@ -67,10 +116,8 @@ class GameSetup extends Component{
                     <input onChange={this.change} name='createGameName' type='text'/>
                 </div>
 
-                <div className='formEntry'>
-                    <label htmlFor='numberPlayers'>number of players:</label>
-                    <input onChange={this.change} value={this.state.numberPlayers} id='numberPlayers' name='numberPlayers' type='number' min='3' max='8'/>
-                </div>
+                {this.playersInfos()}
+                {addButton}
 
                 <div className='formEntry'>
                     <label htmlFor='theme'>theme:</label>
