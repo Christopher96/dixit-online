@@ -2,10 +2,8 @@ import React, { Component } from "react";
 import { Route } from "react-router-dom";
 import { BrowserRouter } from "react-router-dom";
 
-import GameSetup from "./gameSetup/gameSetup";
-import Game from "./game/game";
-
-import modelInstance from "./data/DixitModel";
+import GameSetup from "gameSetup/gameSetup";
+import Game from "game/game";
 
 import "./app.css";
 import "./global.css";
@@ -22,14 +20,14 @@ class App extends Component {
         return (
             <BrowserRouter>
                 <div className="routes">
-                <Route
-                    path='/:gameid'
-                    render={({ match }) => <Game model={modelInstance} gameid={match.params.gameid} />}
-                />
-                <Route
-                    exact path='/'
-                    render={({ history }) => <GameSetup model={modelInstance} history={history} />}
-                />
+                    <Route
+                        path='/:gameid'
+                        render={({ match }) => <Game gameid={match.params.gameid} />}
+                    />
+                    <Route
+                        exact path='/'
+                        render={({ history }) => <GameSetup history={history} />}
+                    />
                 </div>
             </BrowserRouter>
         );

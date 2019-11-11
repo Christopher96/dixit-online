@@ -3,7 +3,10 @@ const Schema = mongoose.Schema
 
 const PlayerSchema = new Schema({    
     name: {
-        type: String
+        type: String,
+        min: 3,
+        max: 20,
+        required: true
     },
     score: {
         type: Number,

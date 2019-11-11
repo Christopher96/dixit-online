@@ -11,9 +11,22 @@ const GameSchema = new Schema({
         unique: true,
         required: true
     },
-    currentPlayer: {
+    teller: {
         type: Number,
         default: 0
+    },
+    picker: {
+        type: Number,
+        default: 0
+    },
+    guesser: {
+        type: Number,
+        default: 0
+    },
+    keyword: {
+        type: String,
+        min: 3,
+        max: 20
     },
     players: [
         PlayerSchema
