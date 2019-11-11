@@ -30,10 +30,10 @@ class GameField extends Component{
         let status = null
 
 
-        switch(game.state) {
+        switch(this.state.status) {
             case "PICKING":
                 status = <div>
-                    <p>`${picker.name}, which card to you want to pick?`</p>
+                    <p>{picker.name}, which card to you want to pick?</p>
                 </div>
                 break
             case "KEYWORD":
@@ -45,7 +45,7 @@ class GameField extends Component{
                 break
             case "CHOOSING":
                     status = <div>
-                        <p>`${guesser.name}, which card has ${teller.name} chosen?`</p>
+                        <p>{guesser.name}, which card has ${teller.name} chosen?</p>
                         <p>The keyword is {game.keyword}</p>
                     </div>
                 break

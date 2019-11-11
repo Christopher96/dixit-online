@@ -25,9 +25,9 @@ router.get('/', async(req, res, next) => {
                 description: filter(img.description || img.alt_description)
             }
         })
+        
         return res.status(200).json(images)
     } catch (e) {
-        console.log(e)
         return res.status(500).json(e);
     }
 })

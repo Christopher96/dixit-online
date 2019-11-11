@@ -57,26 +57,6 @@ class Game extends Component {
                 content = 
                     <div id="game">
                         <p className="gameName">{this.props.gameid}</p>
-                        <div className="sidebar">
-                            <table className="players">
-                                <thead>
-                                <tr>
-                                    <th>Player</th>
-                                    <th>Score</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {players}
-                                </tbody>
-                            </table>
-                        </div>
-                        <div className="field">
-                        </div>
-                let { game } = this.context
-
-                content = 
-                    <div id="game">
-                        <p className="gameName">{this.props.gameid}</p>
                         <GameSidebar />
                         <GameField />
                     </div>
