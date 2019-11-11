@@ -1,9 +1,15 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
 
+import { GameContext } from "context/gameContext"
+import GameSidebar from "gameSidebar/gameSidebar"
+import GameField from "gameField/gameField"
+
 import "./game.css"
 
 class Game extends Component {
+    static contextType = GameContext
+
     constructor(props) {
         super(props)
 
@@ -18,12 +24,12 @@ class Game extends Component {
     }
 
     getGame = () => {
-        this.props.model
+        this.context.model
             .getGame(this.props.gameid)
             .then(res => {
                 if(!res.error) {
+                    this.context.game = res
                     this.setState({
-                        game: res,
                         status: "LOADED"
                     })
                 } else {
@@ -38,32 +44,15 @@ class Game extends Component {
     render() {
         let content = null
 
-        let { game } = this.state;
-
         switch(this.state.status) {
             case "LOADED":
-                let players = game.players.map((player, i) => {
-                    let isCurrent = game.currentPlayer == i;
-                    return 
-                        <tr key={i} className={isCurrent ? 'current' : ''}>
-                            <td>{player.name}</td>
-                            <td>{player.score}</td>
-                        </tr>
-                })
+                let { game } = this.context
+
                 content = 
                     <div id="game">
                         <p className="gameName">{this.props.gameid}</p>
-                        <div className="sidebar">
-                            <table className="players">
-                                <tr>
-                                    <th>Player</th>
-                                    <th>Score</th>
-                                </tr>
-                                {players}
-                            </table>
-                        </div>
-                        <div className="field">
-                        </div>
+                        <GameSidebar />
+                        <GameField />
                     </div>
                 break
             case "LOADING":
