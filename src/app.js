@@ -2,13 +2,11 @@ import React, { Component } from "react";
 import { Route } from "react-router-dom";
 import { BrowserRouter } from "react-router-dom";
 
-import GameSetup from "./gameSetup/gameSetup";
-import Game from "./game/game";
-
+import GameSetup from "gameSetup/gameSetup";
+import Game from "game/game";
 
 import "./app.css";
 import "./global.css";
-
 
 class App extends Component {
     constructor(props) {

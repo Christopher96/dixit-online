@@ -1,7 +1,12 @@
 import React, {Component} from "react";
+
+import { GameContext } from "context/gameContext"
+
 import './gameSetup.css';
 
 class GameSetup extends Component{
+    static contextType = GameContext
+
     constructor(props) {
         super(props);
 
@@ -30,7 +35,7 @@ class GameSetup extends Component{
     }
 
     createGame = (e) => {
-        this.props.model
+        this.context.model
             .createGame(this.state.createGameName, this.state.players)
             .then(res => {
                 if(!res.error) {
@@ -44,7 +49,7 @@ class GameSetup extends Component{
     }
 
     continueGame = (e) => {
-        this.props.model
+        this.context.model
             .getGame(this.state.continueGameName)
             .then(res => {
                 if(!res.error) {
