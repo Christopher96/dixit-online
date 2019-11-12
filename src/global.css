@@ -31,13 +31,13 @@ h1, h2, h3, h4, p, label, input, button {
     height: 100%;
     width: 100%;
     background-color: #005257;
-    background-image: url("images/background_night.png");
+    background-image: url("images/background_night_with_moon.png");
 }
 
 input[type="text"]{
     background: transparent;
     border: none;
-    border-bottom: black 1px solid;
+    border-bottom: rgba(245, 245, 245, 0.4) 1px solid;
     margin: 0 5px;
 }
 

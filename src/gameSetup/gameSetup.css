@@ -29,7 +29,7 @@
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
         'title title'
-        'newGame existingGame';
+        'existingGame newGame';
     grid-column-gap: 20px;
 }
 
@@ -38,10 +38,11 @@
     font-family: 'dilana', serif;
     font-size: 150pt;
     text-align: center;
-    opacity: 0.7;
+    opacity: 0.9;
     margin-top: 20px;
     margin-bottom: 10px;
     line-height: 0.7em;
+    color: whitesmoke;
     text-shadow: 0 0 20px white;
 }
 
@@ -56,18 +57,22 @@
 .subTitle {
     font-size: 40pt;
     text-align: center;
-    opacity: 0.65;
+    opacity: 0.75;
     line-height: 0.7em;
     margin: 10px 0;
-
+    color: whitesmoke;
+    text-shadow: 0 0 20px white;
 }
 
 .setupButton {
     display: block;
     margin: 10px auto;
     font-weight: bold;
-    opacity: 0.65;
+    opacity: 0.85;
     font-size: 22pt;
+    border: none;
+    color: whitesmoke;
+    text-shadow: 0 0 20px white;
 }
 
 .setupButton:hover {
@@ -93,12 +98,16 @@
 
 .formEntry label {
     flex: 0 0 auto;
-    opacity: 0.65;
+    opacity: 0.85;
+    color: whitesmoke;
+    text-shadow: 0 0 20px white;
 }
 
 .formEntry input {
     flex: 1 1 auto;
     font-weight: bold;
+    color: whitesmoke;
+    text-shadow: 0 0 15px white;
 }
 
 .formEntry button {
@@ -118,10 +127,14 @@
 }
 
 #addButton, #removeButton {
-    opacity: 0.7;
+    opacity: 0.8;
+    border: none;
+    color: whitesmoke;
+    text-shadow: 0 0 20px white;
 }
 
 .error {
     opacity: 0.8;
     color: red;
+    text-shadow: 0 0 20px white;
 }
