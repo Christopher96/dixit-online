@@ -3,6 +3,7 @@ import React, {Component} from "react";
 import { GameContext } from "context/gameContext"
 
 import './gameSetup.css';
+import woodenBoard from "../images/wooden_board.png";
 
 class GameSetup extends Component{
     static contextType = GameContext
@@ -73,12 +74,12 @@ class GameSetup extends Component{
 
     addPlayer = (evt) => {
         evt.preventDefault()
-        if (this.state.players.length < 8) {
+        if (this.state.players.length < 6) {
             let newPlayers = this.state.players.slice()
             newPlayers.push('')
             this.setState({players: newPlayers})
         } else {
-            this.setState({createError: "Can't add more than 8 players."})
+            this.setState({createError: "Can't add more than 6 players."})
         }
     }
 
@@ -97,7 +98,7 @@ class GameSetup extends Component{
         let removeButton = (this.state.players.length > 3) ? <button onClick={this.removePlayer(index)}>x</button> : '';
 
         return (
-            <div className='formEntry' key={index}>
+            <div className='formEntry playerName' key={index}>
                 <label htmlFor={`player${index}`}>Player {index + 1}:</label>
                 <input type='text' id={`player${index}`} value={name} key={index}
                        onChange={this.changePlayerName(index)}/>
@@ -112,39 +113,49 @@ class GameSetup extends Component{
 
 
     render() {
-        let addButton = (this.state.players.length < 8) ? <button onClick={this.addPlayer}>+ add player</button> : '';
+        let addButton = (this.state.players.length < 6) ? <button id='addButton' onClick={this.addPlayer}>+ add player</button> : '';
         return (
             <div id='setup'>
-                <h2>Create a new game:</h2>
-                <div className='formEntry'>
-                    <label htmlFor='gameName'>name of game:</label>
-                    <input onChange={this.change} name='createGameName' type='text'/>
-                </div>
+                <img src={woodenBoard} alt="wooden board" id='board'/>
+                <div id='options'>
+                    <p id='title'>Dixit</p>
+                    <div id='newGame'>
+                        <p className='subTitle'>Create a new game</p>
+                        <div className='formEntry'>
+                            <label htmlFor='gameName'>Name of game:</label>
+                            <input onChange={this.change} name='createGameName' type='text'/>
+                        </div>
 
-                {this.playersInfos()}
-                {addButton}
+                        {this.playersInfos()}
 
-                <div className='formEntry'>
-                    <label htmlFor='theme'>theme:</label>
-                    <select id='theme' name='theme'>
-                        <option value='landscapes'>landscapes</option>
-                        <option value='animals'>animals</option>
-                    </select>
-                </div>
+                        <div id='themeSelector' className='formEntry'>
+                            <label htmlFor='theme'>theme:</label>
+                            <select id='theme' name='theme'>
+                                <option value='landscapes'>landscapes</option>
+                                <option value='animals'>animals</option>
 
-                <div className='formEntry'>
-                    <button onClick={this.createGame}>Create game</button>
+                            </select>
+                            <span/>
+                            {addButton}
+                        </div>
+
+                        <div className='formEntry'>
+                            <button className='setupButton' onClick={this.createGame}>Create game</button>
+                        </div>
+                        <p className="error">{this.state.createError}</p>
+                    </div>
+                    <div id='existingGame'>
+                        <p className='subTitle'>Continue existing game</p>
+                        <div className='formEntry'>
+                            <label htmlFor='gameName'>Name of game:</label>
+                            <input onChange={this.change} name='continueGameName' type='text'/>
+                        </div>
+                        <div className='formEntry'>
+                            <button className='setupButton' onClick={this.continueGame}>Continue game</button>
+                        </div>
+                        <p className="error">{this.state.continueError}</p>
+                    </div>
                 </div>
-                <p className="error">{this.state.createError}</p>
-                <h2>Continue existing game</h2>
-                <div className='formEntry'>
-                    <label htmlFor='gameName'>name of game:</label>
-                    <input onChange={this.change} name='continueGameName' type='text'/>
-                </div>
-                <div className='formEntry'>
-                    <button onClick={this.continueGame}>Continue game</button>
-                </div>
-                <p className="error">{this.state.continueError}</p>
             </div>
         )
     }

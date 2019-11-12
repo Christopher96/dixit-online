@@ -1,6 +1,120 @@
 #setup {
-    height: min-content;
-    width: 30vw;
-    margin: auto;
-    background-color: #FF9A4D;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+#board {
+    height: 80vh;
+    width: 80vw;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: calc(-40vh);
+    margin-left: calc(-40vw);
+    filter: drop-shadow(-8px 8px 10px black);
+}
+
+#options {
+    height: 76vh;
+    width: 70vw;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: calc(-38vh);
+    margin-left: calc(-35vw);
+
+    display: grid;
+    grid-template-rows: 1fr 4fr;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+        'title title'
+        'newGame existingGame';
+    grid-column-gap: 20px;
+}
+
+#title {
+    grid-area: title;
+    font-family: 'dilana', serif;
+    font-size: 150pt;
+    text-align: center;
+    opacity: 0.7;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    line-height: 0.7em;
+}
+
+#newGame {
+    grid-area: newGame;
+}
+
+#existingGame {
+    grid-area: existingGame;
+}
+
+.subTitle {
+    font-size: 40pt;
+    text-align: center;
+    opacity: 0.65;
+    line-height: 0.7em;
+    margin: 10px 0;
+}
+
+.setupButton {
+    display: block;
+    margin: 10px auto;
+    font-weight: bold;
+    opacity: 0.65;
+    font-size: 22pt;
+}
+
+.setupButton:hover {
+    opacity: 1;
+}
+
+#options input[type="text"] {
+    width: fit-content;
+}
+
+.formEntry {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: stretch;
+    margin: 5px 0;
+    opacity: 0.8;
+}
+
+.formEntry:hover {
+    opacity: 1;
+}
+
+.formEntry label {
+    flex: 0 0 auto;
+    opacity: 0.65;
+}
+
+.formEntry input {
+    flex: 1 1 auto;
+    font-weight: bold;
+}
+
+.formEntry button {
+    flex: 0 0 auto;
+}
+
+.formEntry select {
+    flex: 0 0 auto;
+}
+
+.formEntry span {
+    flex: 1 1 auto;
+}
+
+#themeSelector {
+    width: 100%;
+}
+
+#addButton {
+    opacity: 0.7;
 }

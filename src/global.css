@@ -1,4 +1,7 @@
 /* All the global variables and rules are set here. */
+/* TODO: remove all the unused fonts */
+@import url('https://fonts.googleapis.com/css?family=Handlee&display=swap');
+
 html, body {
     top: 0;
     height: 100%;
@@ -9,8 +12,19 @@ html, body {
     padding: 0;
 }
 
-h1, h2, h3, h4, p {
+h1, h2, h3, h4, p, label, input, button {
+
+    font-family: 'Handlee', cursive;
     margin: 0;
+    font-size: 22pt;
+}
+
+/* This is the exact font of the dixit board game */
+@font-face {
+    font-family: 'dilana';
+    src:  url('fonts/dilana.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 
 #root {
@@ -18,5 +32,20 @@ h1, h2, h3, h4, p {
     width: 100%;
     background-color: #005257;
     background-image: url("images/background_game_setup_v2_reduced.jpg");
+}
+
+input[type="text"]{
+    background: transparent;
+    border: none;
+    border-bottom: black 1px solid;
+    margin: 0 5px;
+}
+
+button {
+    background: transparent;
+    border: black 1px solid;
+    border-radius: 8px;
+    font-size: 20pt;
+    color: black;
 }
 
