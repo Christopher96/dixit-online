@@ -95,7 +95,7 @@ class GameSetup extends Component{
     }
 
     playerInfo = (name, index) => {
-        let removeButton = (this.state.players.length > 3) ? <button onClick={this.removePlayer(index)}>x</button> : '';
+        let removeButton = (this.state.players.length > 3) ? <button id='removeButton' onClick={this.removePlayer(index)}>x</button> : '';
 
         return (
             <div className='formEntry playerName' key={index}>
