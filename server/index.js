@@ -23,7 +23,7 @@ db.on('error', function(err) {
 })
 
 // Set host and port to environment variables or default values
-const host = process.env.HOST || 'localhost'
+const host = process.env.HOST || '0.0.0.0'
 const port = process.env.PORT || '8080'
 
 // Parse json responses and allow requests from any domain
