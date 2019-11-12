@@ -31,7 +31,7 @@ h1, h2, h3, h4, p, label, input, button {
     height: 100%;
     width: 100%;
     background-color: #005257;
-    background-image: url("images/background_game_setup_v2_reduced.jpg");
+    background-image: url("images/background_night.png");
 }
 
 input[type="text"]{

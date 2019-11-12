@@ -5,14 +5,14 @@
 }
 
 #board {
-    height: 80vh;
-    width: 80vw;
+    height: 114vh;
+    width: 114vw;
     position: fixed;
     top: 50%;
     left: 50%;
-    margin-top: calc(-40vh);
-    margin-left: calc(-40vw);
-    filter: drop-shadow(-8px 8px 10px black);
+    margin-top: calc(-56vh);
+    margin-left: calc(-56vw);
+    opacity: 0.94;
 }
 
 #options {
@@ -42,6 +42,7 @@
     margin-top: 20px;
     margin-bottom: 10px;
     line-height: 0.7em;
+    text-shadow: 0 0 20px white;
 }
 
 #newGame {
@@ -58,6 +59,7 @@
     opacity: 0.65;
     line-height: 0.7em;
     margin: 10px 0;
+
 }
 
 .setupButton {

@@ -4,6 +4,7 @@ import { GameContext } from "context/gameContext"
 
 import './gameSetup.css';
 import woodenBoard from "../images/wooden_board.png";
+import cloud from "../images/cloud2.png";
 
 class GameSetup extends Component{
     static contextType = GameContext
@@ -36,6 +37,18 @@ class GameSetup extends Component{
     }
 
     createGame = (e) => {
+        e.preventDefault();
+        this.state.players.forEach(name => {
+            if (name.replace(/\s/g, '') === '') {
+                this.setState({
+                    createError: "Player names can't be empty."
+                });
+                console.log('heeeeere 1');
+                return 'sljdflsjd';
+            }
+        });
+
+        console.log('heeeeeeeere 2')
         this.context.model
             .createGame(this.state.createGameName, this.state.players)
             .then(res => {
@@ -116,7 +129,7 @@ class GameSetup extends Component{
         let addButton = (this.state.players.length < 6) ? <button id='addButton' onClick={this.addPlayer}>+ add player</button> : '';
         return (
             <div id='setup'>
-                <img src={woodenBoard} alt="wooden board" id='board'/>
+                <img src={cloud} alt="wooden board" id='board'/>
                 <div id='options'>
                     <p id='title'>Dixit</p>
                     <div id='newGame'>
