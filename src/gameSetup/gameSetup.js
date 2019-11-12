@@ -38,17 +38,16 @@ class GameSetup extends Component{
 
     createGame = (e) => {
         e.preventDefault();
+        // TODO: fix this such that empty names are not allowed
         this.state.players.forEach(name => {
             if (name.replace(/\s/g, '') === '') {
                 this.setState({
                     createError: "Player names can't be empty."
                 });
-                console.log('heeeeere 1');
-                return 'sljdflsjd';
+                return;
             }
         });
 
-        console.log('heeeeeeeere 2')
         this.context.model
             .createGame(this.state.createGameName, this.state.players)
             .then(res => {
@@ -127,9 +126,9 @@ class GameSetup extends Component{
 
     render() {
         let addButton = (this.state.players.length < 6) ? <button id='addButton' onClick={this.addPlayer}>+ add player</button> : '';
+        /* <img src={cloud} alt="wooden board" id='board'/> */
         return (
             <div id='setup'>
-                <img src={cloud} alt="wooden board" id='board'/>
                 <div id='options'>
                     <p id='title'>Dixit</p>
                     <div id='newGame'>
