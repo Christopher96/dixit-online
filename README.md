@@ -2,6 +2,11 @@
 #### Description
 An online version of the game Dixit. It will be played on a single computer in the web browser. Rules of the game are written below. 
 
+#### Deployed app
+The app is deployed with [Heroku](https://dashboard.heroku.com "Heroku") at:
+[http://dixitonline.herokuapp.com](http://dixitonline.herokuapp.com)
+
+
 #### API
 The game uses the [Unsplash API](https://unsplash.com/developers "Unsplash API") to display pretty images as playing cards.
 
