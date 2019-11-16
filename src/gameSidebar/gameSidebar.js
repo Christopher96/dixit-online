@@ -7,15 +7,11 @@ import './gameSidebar.css';
 class GameSidebar extends Component{
     static contextType = GameContext
 
-    constructor(props) {
-        super(props);
-
-    }
     render() {
         let { game } = this.context;
 
         let players = game.players.map((player, i) => {
-            let isCurrent = game.currentPicker == i;
+            let isCurrent = game.currentPicker === i;
             return <tr key={i} className={isCurrent ? 'current' : ''}>
                 <td>{player.name}</td>
                 <td>{player.score}</td>
@@ -23,6 +19,7 @@ class GameSidebar extends Component{
         })
         return(
             <div id="gameSidebar">
+                <h1 id='gameTitle'>{game.gameid}</h1>
                 <table className="players">
                     <thead>
                         <tr>

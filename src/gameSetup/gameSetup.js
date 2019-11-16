@@ -1,21 +1,15 @@
 import React, {Component} from "react";
 
 import { GameContext } from "context/gameContext"
+import moon from "../images/moon.png"
 
 import './gameSetup.css';
-import woodenBoard from "../images/wooden_board.png";
-import cloud from "../images/cloud2.png";
 
 class GameSetup extends Component{
     static contextType = GameContext
 
     constructor(props) {
         super(props);
-
-        this.resetState();
-    }
-
-    resetState = () => {
         this.state = {
             createError: "",
             createGameName: "",
@@ -38,16 +32,22 @@ class GameSetup extends Component{
 
     createGame = (e) => {
         e.preventDefault();
+        console.log('create game called: ', this.state.createGameName, this.state.players);
+        if (this.state.createGameName.replace(/\s/g, '') === '') {
+            this.setState({
+                createError: "Name of game can't be empty."
+            })
+            return
+        }
         // TODO: fix this such that empty names are not allowed
-        this.state.players.forEach(name => {
+        for (let name of this.state.players) {
             if (name.replace(/\s/g, '') === '') {
                 this.setState({
                     createError: "Player names can't be empty."
                 });
                 return;
             }
-        });
-
+        }
         this.context.model
             .createGame(this.state.createGameName, this.state.players)
             .then(res => {
@@ -129,6 +129,9 @@ class GameSetup extends Component{
         /* <img src={cloud} alt="wooden board" id='board'/> */
         return (
             <div id='setup'>
+                <div id='stars'>
+                </div>
+                <img id='moon' src={moon} alt=''/>
                 <div id='options'>
                     <p id='title'>Dixit</p>
                     <div id='newGame'>

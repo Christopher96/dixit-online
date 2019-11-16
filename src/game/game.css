@@ -1,3 +1,19 @@
+#game {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-areas: "sidebar field";
+}
+
+#gameSidebarContainer {
+    grid-area: sidebar;
+}
+
+#gameFieldContainer {
+    grid-area: field;
+}
+
 .loader {
   border: 16px solid #f3f3f3; 
   border-top: 16px solid #3498db;

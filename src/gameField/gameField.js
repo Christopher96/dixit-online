@@ -49,6 +49,11 @@ class GameField extends Component{
                         <p>The keyword is {game.keyword}</p>
                     </div>
                 break
+            default:
+                    status = <div>
+                        <p>Something went wrong.</p>
+                    </div>
+                break
         }
         return(            
             <div id="gameField">

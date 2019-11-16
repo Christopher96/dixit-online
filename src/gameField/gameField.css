@@ -1,0 +1,12 @@
+#gameField {
+    height: calc(100% - 150px);
+    width: calc(100% - 100px);
+    background-image: url("../images/fieldCloud.png");
+    background-size: 100% 100%;
+    padding: 75px 50px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+}

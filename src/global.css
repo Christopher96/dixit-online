@@ -12,8 +12,7 @@ html, body {
     padding: 0;
 }
 
-h1, h2, h3, h4, p, label, input, button {
-
+h1, h2, h3, h4, p, label, input, button, th, td {
     font-family: 'Handlee', cursive;
     margin: 0;
     font-size: 22pt;
@@ -31,7 +30,7 @@ h1, h2, h3, h4, p, label, input, button {
     height: 100%;
     width: 100%;
     background-color: #005257;
-    background-image: url("images/background_night_with_moon.png");
+    background-image: url("images/background_night_darker.png");
 }
 
 input[type="text"]{

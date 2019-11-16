@@ -47,8 +47,9 @@ class Game extends Component {
 
         switch(this.state.status) {
             case "LOADED":
+                console.log(game);
                 let players = game.players.map((player, i) => {
-                    let isCurrent = game.currentPlayer == i;
+                    let isCurrent = game.currentPlayer === i;
                     return (
                         <tr key={i} className={isCurrent ? 'current' : ''}>
                             <td>{player.name}</td>
@@ -58,9 +59,12 @@ class Game extends Component {
                 })
                 content = 
                     <div id="game">
-                        <p className="gameName">{this.props.gameid}</p>
-                        <GameSidebar />
-                        <GameField />
+                        <div id='gameSidebarContainer'>
+                            <GameSidebar/>
+                        </div>
+                        <div id='gameFieldContainer'>
+                            <GameField/>
+                        </div>
                     </div>
                 break
             case "LOADING":
@@ -75,6 +79,11 @@ class Game extends Component {
                         <p className="notFound">404: {this.state.error}</p>
                     </div>
                 break
+            default:
+                content =
+                    <div className="center">
+                        <p>Something went wrong.</p>
+                    </div>
         }
 
         return content

@@ -1,10 +1,6 @@
 import ObservableModel from "./ObservableModel";
 
 class DixitModel extends ObservableModel {
-    constructor() {
-        super();
-    }
-
     jsonToQuery(json) {
         return '?' + 
             Object.keys(json).map(function(key) {
@@ -14,7 +10,7 @@ class DixitModel extends ObservableModel {
     }
 
     processResponse(response) {
-        if(response.code == 500)
+        if(response.code === 500)
             throw response;
         if(response.ok)
             return response.json()

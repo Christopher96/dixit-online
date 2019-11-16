@@ -1,0 +1,29 @@
+#gameSidebar {
+    height: calc(100% - 150px);
+    width: calc(100% - 100px);
+    background-image: url("../images/sidebarCloud.png");
+    background-size: 100% 100%;
+    padding: 75px 50px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+}
+
+#gameTitle {
+    font-size: 30pt;
+    opacity: 0.55;
+    margin: 25px;
+    color: black;
+}
+
+.players {
+    border-spacing: 25px 0;
+}
+.players th, .players td{
+    text-align: center;
+    opacity: 0.65;
+}
+
+
