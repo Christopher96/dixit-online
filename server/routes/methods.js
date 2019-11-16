@@ -1,4 +1,5 @@
 const config = require('./config')
+const fetch = require('node-fetch')
 
 const headers = {
     'Authorization': 'Client-ID ' + config.access_key
@@ -15,11 +16,14 @@ const jsonToQuery = (json) => {
 module.exports.get = async(action, params = {}) => {
     const query = jsonToQuery(params)
     const url = config.endpoint + action + query;
-
-    const response = await fetch(url, {
-        headers
-    })
-    return await response.json()
+    try {
+        const response = await fetch(url, {
+            headers
+        })
+        return await response.json()
+    } catch (e){
+        console.log('error', e)
+    }
 }
 
 module.exports.post = async(action, data = {}) => {

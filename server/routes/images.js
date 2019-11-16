@@ -13,12 +13,15 @@ const filter = (s) => {
 }
 
 router.get('/', async(req, res, next) => {
+    let { count, query } = req.query
     try {
-        const data = await get('/photos/random', {
-            count: 10,
+        const data = await get('/search/photos', {
+            query: query,
+            page: 1,
+            per_page: count,
             orientation: 'portrait'
         })
-        const images = data.map(img => {
+        const images = data.results.map(img => {
             return {
                 color: img.color,
                 urls: img.urls,

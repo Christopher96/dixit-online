@@ -43,6 +43,10 @@ class DixitModel extends ObservableModel {
     getGame(gameid) {
         return this.get('/games/'+gameid);
     }
+
+    getImages(count = 6, query = 'landscape') {
+        return this.get('/images', {count, query})
+    }
 }
 
 export default new DixitModel();

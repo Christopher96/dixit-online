@@ -20,6 +20,8 @@ class Game extends Component {
 
     componentDidMount() {
         this.getGame()
+        this.context.model.getImages(1, 'landscape')
+            .then(console.log);
     }
 
     getGame = () => {
@@ -47,7 +49,6 @@ class Game extends Component {
 
         switch(this.state.status) {
             case "LOADED":
-                console.log(game);
                 let players = game.players.map((player, i) => {
                     let isCurrent = game.currentPlayer === i;
                     return (

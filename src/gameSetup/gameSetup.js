@@ -32,7 +32,6 @@ class GameSetup extends Component{
 
     createGame = (e) => {
         e.preventDefault();
-        console.log('create game called: ', this.state.createGameName, this.state.players);
         if (this.state.createGameName.replace(/\s/g, '') === '') {
             this.setState({
                 createError: "Name of game can't be empty."
