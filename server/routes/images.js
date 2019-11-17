@@ -1,9 +1,7 @@
 const fetch = require('node-fetch')
 const { get, post } = require('./methods')
 
-// Gets express router
-const express = require('express')
-const router = express.Router()
+const Card = require('../models/Card')
 
 const filter = (s) => {
     if (typeof s !== 'string') return ''
@@ -12,27 +10,25 @@ const filter = (s) => {
     return (s.charAt(0).toUpperCase() + s.slice(1)).slice(0,maxlen)
 }
 
-router.get('/', async(req, res, next) => {
-    let { count, query } = req.query
+
+module.exports.get_cards = async(count, query) => {
     try {
         const data = await get('/search/photos', {
-            query: query,
+            query,
             page: 1,
             per_page: count,
             orientation: 'portrait'
         })
-        const images = data.results.map(img => {
-            return {
+        const cards = data.results.map(img => {
+            return new Card({
                 color: img.color,
-                urls: img.urls,
+                thumbnail: img.urls.thumb,
+                full: img.urls.full,
                 description: filter(img.description || img.alt_description)
-            }
+            })
         })
-        
-        return res.status(200).json(images)
-    } catch (e) {
-        return res.status(500).json(e);
+        return cards
+    } catch(e) {
+        throw e;
     }
-})
-
-module.exports = router
+}

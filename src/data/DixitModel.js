@@ -11,9 +11,12 @@ class DixitModel extends ObservableModel {
 
     processResponse(response) {
         if(response.code === 500)
-            throw response;
+            return {
+                error: "Something went wrong."
+            }
         if(response.ok)
             return response.json()
+
         return response.text().then(error => {
             return {
                 error
@@ -36,16 +39,12 @@ class DixitModel extends ObservableModel {
         }).then(this.processResponse);
     }
 
-    createGame(gameid, players) {
-        return this.post('/games/create', { gameid, players });
+    createGame(gameid, players, query = 'landscape') {
+        return this.post('/games/create', { gameid, players, query });
     }
 
     getGame(gameid) {
         return this.get('/games/'+gameid);
-    }
-
-    getImages(count = 6, query = 'landscape') {
-        return this.get('/images', {count, query})
     }
 }
 

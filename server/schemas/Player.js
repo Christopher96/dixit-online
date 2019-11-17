@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+const CardSchema = require('./Card')
+
 const PlayerSchema = new Schema({    
     name: {
         type: String,
@@ -11,7 +13,10 @@ const PlayerSchema = new Schema({
     score: {
         type: Number,
         default: 0
-    }
+    },
+    cards: [
+        CardSchema
+    ]
 })
 
 module.exports = PlayerSchema

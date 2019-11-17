@@ -20,8 +20,6 @@ class Game extends Component {
 
     componentDidMount() {
         this.getGame()
-        this.context.model.getImages(1, 'landscape')
-            .then(console.log);
     }
 
     getGame = () => {

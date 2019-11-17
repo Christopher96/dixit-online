@@ -34,7 +34,6 @@ app.use(cors())
 app.use(morgan('dev'))
 
 router.use('/games', require('./routes/games'))
-router.use('/images', require('./routes/images'))
 
 app.use('/test', require('./routes/populate'))
 app.use('/api', router)
