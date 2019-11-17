@@ -2,6 +2,8 @@ import React, {Component} from "react";
 
 import { GameContext } from "context/gameContext"
 
+import Card from "gameCard/gameCard"
+
 import './gameField.css';
 
 class GameField extends Component{
@@ -20,6 +22,9 @@ class GameField extends Component{
         this.context.game.keyword = this.state.keyword
     }
 
+    generateCards = (player) => {
+        return player.cards.map(card => <Card card={card} />)
+    }
 
     render() {
         let { game } = this.context;
@@ -28,10 +33,12 @@ class GameField extends Component{
         let guesser = game.players[game.guesser]
 
         let status = null
+        let cards = null
 
 
         switch(this.state.status) {
             case "PICKING":
+                cards = this.generateCards(picker)
                 status = <div>
                     <p>{picker.name}, which card to you want to pick?</p>
                 </div>
@@ -58,6 +65,9 @@ class GameField extends Component{
         return(            
             <div id="gameField">
                 {status}
+                <div id="gameCards">
+                    {cards}
+                </div>
             </div>
         ) 
     }

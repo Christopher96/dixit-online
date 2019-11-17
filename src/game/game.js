@@ -47,15 +47,6 @@ class Game extends Component {
 
         switch(this.state.status) {
             case "LOADED":
-                let players = game.players.map((player, i) => {
-                    let isCurrent = game.currentPlayer === i;
-                    return (
-                        <tr key={i} className={isCurrent ? 'current' : ''}>
-                            <td>{player.name}</td>
-                            <td>{player.score}</td>
-                        </tr>
-                    )
-                })
                 content = 
                     <div id="game">
                         <div id='gameSidebarContainer'>
