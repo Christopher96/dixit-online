@@ -1,8 +1,8 @@
 import React from "react"
-import modelInstance from "data/DixitModel"
 
-export const GameContext = React.createContext({
-    model: modelInstance,
-    game: null
-})
+const GameContext = React.createContext({})
+
+export const GameProvider = GameContext.Provider
+export const GameConsumer = GameContext.Consumer
+export default GameContext
 

@@ -23,7 +23,7 @@ module.exports.get_cards = async(count, query) => {
             return new Card({
                 color: img.color,
                 thumbnail: img.urls.thumb,
-                full: img.urls.full,
+                full: img.urls.regular,
                 description: filter(img.description || img.alt_description)
             })
         })

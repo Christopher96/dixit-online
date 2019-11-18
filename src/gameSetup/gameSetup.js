@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 
-import { GameContext } from "context/gameContext"
+import GameContext from "context/gameContext"
 import moon from "../images/moon.png"
 
 import './gameSetup.css';

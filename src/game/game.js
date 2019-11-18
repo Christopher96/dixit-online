@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 
-import { GameContext } from "context/gameContext"
+import GameContext from "context/gameContext"
 import GameSidebar from "gameSidebar/gameSidebar"
 import GameField from "gameField/gameField"
 
@@ -9,11 +9,10 @@ import "./game.css"
 class Game extends Component {
     static contextType = GameContext
 
-    constructor(props) {
+    constructor(props, context) {
         super(props)
 
         this.state = {
-            game: null,
             status: "LOADING"
         }
     }

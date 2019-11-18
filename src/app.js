@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { Route } from "react-router-dom";
 import { BrowserRouter } from "react-router-dom";
 
+import modelInstance from "data/DixitModel"
+import { GameProvider } from "context/gameContext"
+
 import GameSetup from "gameSetup/gameSetup";
 import Game from "game/game";
 
@@ -17,19 +20,27 @@ class App extends Component {
     }
 
     render() {
+        let context ={
+            model: modelInstance,
+            game: null,
+            update: () => {}
+        }
+
         return (
-            <BrowserRouter>
-                <div className="routes">
-                    <Route
-                        path='/:gameid'
-                        render={({ match }) => <Game gameid={match.params.gameid} />}
-                    />
-                    <Route
-                        exact path='/'
-                        render={({ history }) => <GameSetup history={history} />}
-                    />
-                </div>
-            </BrowserRouter>
+            <GameProvider value={context}>
+                <BrowserRouter>
+                    <div id="routes">
+                        <Route
+                            path='/:gameid'
+                            render={({ match }) => <Game gameid={match.params.gameid} />}
+                        />
+                        <Route
+                            exact path='/'
+                            render={({ history }) => <GameSetup history={history} />}
+                        />
+                    </div>
+                </BrowserRouter>
+            </GameProvider>
         );
     }
 }

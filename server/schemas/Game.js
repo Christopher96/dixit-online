@@ -11,6 +11,10 @@ const GameSchema = new Schema({
         unique: true,
         required: true
     },
+    status: {
+        type: String,
+        default: "PICKING"
+    },
     teller: {
         type: Number,
         default: 0

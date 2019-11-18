@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 
-import { GameContext } from "context/gameContext"
+import GameContext from "context/gameContext"
 
 import './gameSidebar.css';
 

@@ -1,3 +1,39 @@
 .gameCard {
-    padding: 1em;
+    position: relative;
+    margin: 1em;
+    height: 300px;
+    width: 200px;
+}
+
+.gameCard img {
+    border-radius: 1em;
+    height: 100%;
+    width: 100%;
+}
+
+.expandButton {
+    width: 1.5em;
+    height: 1.5em;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: .5em;
+    border-radius: .5em;
+}
+
+.expandButton img {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+.expandButton a {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.expandButton svg {
+    width: 100%;
+    height: 100%;
 }
