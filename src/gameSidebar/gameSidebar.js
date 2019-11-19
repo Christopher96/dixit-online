@@ -7,6 +7,10 @@ import './gameSidebar.css';
 class GameSidebar extends Component{
     static contextType = GameContext
 
+    constructor(props, context) {
+        super(props)
+    }
+
     render() {
         let { game } = this.context;
 

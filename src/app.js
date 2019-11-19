@@ -17,17 +17,20 @@ class App extends Component {
         this.state = {
             title: "Dixit online"
         };
+
+        this.state = {
+            model: modelInstance,
+            game: null,
+            updateGame: (game) => {
+                this.setState({ game })
+            }
+        }
     }
 
     render() {
-        let context ={
-            model: modelInstance,
-            game: null,
-            update: () => {}
-        }
 
         return (
-            <GameProvider value={context}>
+            <GameProvider value={this.state}>
                 <BrowserRouter>
                     <div id="routes">
                         <Route
