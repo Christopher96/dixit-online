@@ -24,7 +24,7 @@ module.exports.get_cards = async(count, query) => {
                 color: img.color,
                 thumbnail: img.urls.thumb,
                 full: img.urls.regular,
-                description: filter(img.description || img.alt_description || "")
+                description: filter(img.description || img.alt_description)
             })
         })
         return cards

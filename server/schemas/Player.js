@@ -17,15 +17,8 @@ const PlayerSchema = new Schema({
     cards: [
         CardSchema
     ],
-    pickedCard: {
-        type: Number,
-        default: 0
-    },
-    guessedCard: {
-        type: Number,
-        default: 0
-    }
-
+    pickedCard: CardSchema,
+    guessedCard: CardSchema
 })
 
 module.exports = PlayerSchema

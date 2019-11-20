@@ -12,10 +12,14 @@ class GameCard extends Component{
         super(props)
     }
 
+    selectCard = () => {
+        this.context.selectCard(this.props.card)
+    }
+
     render() {
-        let { index, card } = this.props
+        let { card } = this.props
         return (
-            <div onClick={() => this.context.selectCard(index)} className="gameCard">
+            <div onClick={() => this.selectCard()} className="gameCard">
                 <ExpandButton full={card.full} thumb={card.thumbnail} alt={card.description} />
                 <img src={card.thumbnail} />
             </div>

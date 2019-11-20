@@ -29,7 +29,7 @@ class GameField extends Component{
         this.context.updateGame(game)
     }
 
-    selectCard = (key) => {
+    selectCard = (card) => {
         let { game } = this.context
 
         let numPlayers = game.players.length-1
@@ -39,7 +39,7 @@ class GameField extends Component{
             case "GAMEOVER":
                 return
             case "PICKING":
-                game.players[game.picker].pickedCard = key
+                game.players[game.picker].pickedCard = card
 
                 if(game.keyword == null) {
                     game.status = "KEYWORD"
@@ -55,7 +55,7 @@ class GameField extends Component{
                 } 
                 break
             case "GUESSING":
-                game.players[game.guesser].guessedCard = key
+                game.players[game.guesser].guessedCard = card
 
                 game.guesser++
                 if(game.guesser > numPlayers) game.guesser = 0
@@ -75,43 +75,66 @@ class GameField extends Component{
         let { game } = this.context
 
         let correctGuesses = 0
-        let tellerCard = game.teller.pickedCard
+        let teller = game.players[game.teller]
+        let tellerCard = teller.pickedCard
 
-        game.players.forEach((player, i) => {
-            if(i !== game.teller && player.pickedCard == tellerCard) {
+        game.players.forEach(player => {
+            let playerCard = player.guessedCard
+            if(player !== teller && playerCard == tellerCard) {
                 player.correct = true
                 correctGuesses++
             }
         })
 
+        // All the players guessed the tellers card or no one did
         if(correctGuesses == game.players.length-1 || correctGuesses == 0) {
             game.players.forEach(player => {
-                if(player != game.teller) {
+                if(player !== teller) {
                     player.score += 2
                 }
             })
+            // Not all but some guessed the correct card
         } else {
-            game.teller.score += 3
+            game.players[game.teller].score += 3
             game.players.forEach(player => {
                 if(player.correct) {
                     player.score += 3
                 }
             })
+
+            // Some were players were incorrect
+            game.players.forEach(player => {
+                if(!player.correct) {
+
+                    // Find the the player that has the incorrect guessed card
+                    game.players.forEach(otherPlayer => {
+                        if(otherPlayer !== teller && otherPlayer.pickedCard === player.guessedCard) {
+                            otherPlayer.score += 1
+                        }
+                    })
+                }
+            })
         }
 
-        game.players.forEach(player => {
-            if(!player.correct) {
-                game.players[player.guessedCard].score += 1
-            }
-        })
+
+    }
+
+    shuffleArray = (array) => {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
     }
 
     pickedCards = () => {
         let { game } = this.context
 
-        let cards = game.players.map((player, i) => {
-            return player.cards[player.pickedCard]
+        let cards = game.players.map(player => {
+            return player.pickedCard
         })
+
+        // Shuffle so we don't know which one is the tellers card
+        this.shuffleArray(cards)
 
         return this.cardsWrapper(cards)
     }
@@ -119,7 +142,7 @@ class GameField extends Component{
     cardsWrapper = (cards) => {
         return <div className="gameCards">
             <SRLWrapper>
-                {cards.map((card, i) => <GameCard key={i} index={i} card={card} />)}
+                {cards.map((card, i) => <GameCard key={i} card={card} />)}
             </SRLWrapper>
         </div>
     }
@@ -148,7 +171,7 @@ class GameField extends Component{
                             <input type="text" onChange={e => this.setState({ keyword: e.target.value })} />
                             <button onClick={this.changeKeyword}>ok</button>
                         </div>
-                        content = this.cardsWrapper([picker.cards[picker.pickedCard]])
+                        content = this.cardsWrapper([picker.pickedCard])
                     break
                 case "GUESSING":
                         status = <div>
@@ -162,7 +185,7 @@ class GameField extends Component{
                             <p>Game over</p>
                             <p>{teller.name} picked this card.</p>
                         </div>
-                        content = this.cardsWrapper([teller.cards[teller.pickedCard]])
+                        content = this.cardsWrapper([teller.pickedCard])
                     break
                 default:
                     status = <div>
