@@ -1,6 +1,4 @@
-import ObservableModel from "./ObservableModel";
-
-class DixitModel extends ObservableModel {
+class DixitModel {
     jsonToQuery(json) {
         return '?' + 
             Object.keys(json).map(function(key) {

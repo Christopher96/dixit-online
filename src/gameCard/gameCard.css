@@ -3,6 +3,8 @@
     margin: 1em;
     height: 300px;
     width: 200px;
+    display: flex;
+    flex-direction: column;
 }
 
 .gameCard img {

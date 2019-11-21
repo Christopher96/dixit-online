@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox"
+import SimpleReactLightbox, { SRLWrapper }from "simple-react-lightbox"
 
 import GameContext from "context/gameContext"
 import GameCard from "gameCard/gameCard"
@@ -13,6 +13,7 @@ class GameField extends Component{
         super(props)
 
         context.selectCard = this.selectCard
+        context.game.status = "PICKING"
 
         this.state = {
             keyword: context.game.keyword
@@ -24,15 +25,13 @@ class GameField extends Component{
 
         game.keyword = this.state.keyword
         game.status = "PICKING"
-        game.picker++
+        this.next("picker")
 
         this.context.updateGame(game)
     }
 
     selectCard = (card) => {
         let { game } = this.context
-
-        let numPlayers = game.players.length-1
 
         switch(game.status) {
             case "KEYWORD":
@@ -44,25 +43,21 @@ class GameField extends Component{
                 if(game.keyword == null) {
                     game.status = "KEYWORD"
                 } else {
-                    game.picker++
-                    if(game.picker > numPlayers) game.picker = 0
+                    this.next("picker")
 
                     if(game.picker === game.teller) {
                         game.status = "GUESSING"
-                        game.guesser = game.teller+1
-                        if(game.guesser > numPlayers) game.guesser = 0
                     } 
                 } 
                 break
             case "GUESSING":
                 game.players[game.guesser].guessedCard = card
 
-                game.guesser++
-                if(game.guesser > numPlayers) game.guesser = 0
+                this.next("guesser")
 
                 if(game.guesser === game.teller) {
                     game.status = "GAMEOVER"
-                    this.distributePoints()
+                    this.distributeScore()
                 }                
                 break
         }
@@ -71,7 +66,7 @@ class GameField extends Component{
     }
 
 
-    distributePoints = () => {
+    distributeScore = () => {
         let { game } = this.context
 
         let correctGuesses = 0
@@ -147,6 +142,33 @@ class GameField extends Component{
         </div>
     }
 
+    set = (type, val) => {
+        let { game } = this.context
+        let numPlayers = game.players.length-1
+        game[type] = val
+        if(game[type] > numPlayers) 
+            game[type] = 0
+
+        this.context.updateGame(game)
+    }
+
+    next = (type) => {
+        this.set(type, this.context.game[type]+1)
+    }
+
+    newRound = () => {
+        this.next("teller")
+
+        let { game } = this.context
+        game.picker = game.teller
+        this.set("guesser", game.teller+1)
+
+        game.keyword = null
+        game.status = "PICKING"
+
+        this.context.updateGame(game)
+    }
+
     render() {
         let { game } = this.context
         let teller = game.players[game.teller]
@@ -185,8 +207,11 @@ class GameField extends Component{
                             <p>Game over</p>
                             <p>{teller.name} picked this card.</p>
                         </div>
-                        content = this.cardsWrapper([teller.pickedCard])
-                    break
+                        content = <div>
+                            {this.cardsWrapper([teller.pickedCard])}
+                            <button onClick={this.newRound}>New round</button>
+                        </div>
+                        break
                 default:
                     status = <div>
                         <p>Something went wrong.</p>
