@@ -17,29 +17,12 @@ class GameCard extends Component{
     }
 
     render() {
-        //<ExpandButton full={card.full} thumb={card.thumbnail} alt={card.description} />
-        let { card } = this.props
-
-        let showBtn = true
-        let btnTxt = null
-        switch(this.context.game.status) {
-            case "PICKING":
-                btnTxt = "Pick"
-                break
-            case "GUESSING":
-                btnTxt = "Guess"
-                break
-            case "KEYWORD":
-                showBtn = false
-                break
-        }
+        let { card, index } = this.props
 
         return (
-            <div>
-                <a href={card.full} data-attribute="SRL" className="gameCard">
-                    <img src={card.thumbnail} alt={card.description} />
-                </a>
-                {showBtn && <button onClick={() => this.selectCard()}>{btnTxt}</button>}
+            <div className="gameCard">
+                <ExpandButton index={index} />
+                <img onClick={this.selectCard} src={card.thumbnail} alt={card.description} />
             </div>
         );
     }

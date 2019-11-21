@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import SimpleReactLightbox, { SRLWrapper }from "simple-react-lightbox"
+import Carousel, { Modal, ModalGateway } from 'react-images';
 
 import GameContext from "context/gameContext"
 import GameCard from "gameCard/gameCard"
@@ -12,22 +12,21 @@ class GameField extends Component{
     constructor(props, context) {
         super(props)
 
+        context.toggleModal = this.toggleModal
         context.selectCard = this.selectCard
         context.game.status = "PICKING"
 
         this.state = {
+            modalIsOpen: false,
             keyword: context.game.keyword
         }
     }
 
-    changeKeyword = () => {
-        let { game } = this.context
-
-        game.keyword = this.state.keyword
-        game.status = "PICKING"
-        this.next("picker")
-
-        this.context.updateGame(game)
+    toggleModal = (selectedIndex) => {
+        this.setState(state => ({ 
+            modalIsOpen: !state.modalIsOpen,
+            selectedIndex
+        }))
     }
 
     selectCard = (card) => {
@@ -65,6 +64,15 @@ class GameField extends Component{
         this.context.updateGame(game)
     }
 
+    changeKeyword = () => {
+        let { game } = this.context
+
+        game.keyword = this.state.keyword
+        game.status = "PICKING"
+        this.next("picker")
+
+        this.context.updateGame(game)
+    }
 
     distributeScore = () => {
         let { game } = this.context
@@ -121,25 +129,23 @@ class GameField extends Component{
         }
     }
 
-    pickedCards = () => {
-        let { game } = this.context
+    generateCards = (cards) => {
+        if(!Array.isArray(cards))
+            cards = [cards]
 
-        let cards = game.players.map(player => {
-            return player.pickedCard
-        })
+        console.log(cards)
 
-        // Shuffle so we don't know which one is the tellers card
-        this.shuffleArray(cards)
-
-        return this.cardsWrapper(cards)
-    }
-
-    cardsWrapper = (cards) => {
-        return <div className="gameCards">
-            <SRLWrapper>
-                {cards.map((card, i) => <GameCard key={i} card={card} />)}
-            </SRLWrapper>
-        </div>
+        return {
+            images: cards.map(card => {
+                return {
+                    src: card.full,
+                    caption: card.description
+                }
+            }),
+            elems: <div className="gameCards">
+                {cards.map((card, i) => <GameCard key={i} index={i} card={card} />)}
+            </div>
+        }
     }
 
     set = (type, val) => {
@@ -177,54 +183,70 @@ class GameField extends Component{
 
         let status = null
         let content = null
+        let cards = null
 
         let keyword = (teller !== picker) && <p>The keyword is "{game.keyword}"</p>
 
             switch(game.status) {
                 case "PICKING":
-                    status = <div>
+                    cards = this.generateCards(picker.cards)
+                    content = <div>
                         <p>{picker.name}, which card to you want to pick?</p>
+                        {cards.elems}
                     </div>
-                        content = this.cardsWrapper(picker.cards)
-                    break
+                        break
                 case "KEYWORD":
-                        status = <div>
-                            <p>What is your keyword?</p>
-                            <input type="text" onChange={e => this.setState({ keyword: e.target.value })} />
-                            <button onClick={this.changeKeyword}>ok</button>
-                        </div>
-                        content = this.cardsWrapper([picker.pickedCard])
-                    break
+                        cards = this.generateCards(picker.pickedCard)
+                    content = <div>
+                        <p>What is your keyword?</p>
+                        <input type="text" onChange={e => this.setState({ keyword: e.target.value })} />
+                        <button onClick={this.changeKeyword}>ok</button>
+                        {cards.elems}
+                    </div>
+                        break
                 case "GUESSING":
-                        status = <div>
-                            <p>{guesser.name}, which card has {teller.name} picked?</p>
-                        </div>
-                        content = this.pickedCards()
-                    break
+                        cards = this.generateCards(game.players.map(player => player.pickedCard))
+                    content = <div>
+                        <p>{guesser.name}, which card has {teller.name} picked?</p>
+                        {cards.elems}
+                    </div>
+                        break
 
                 case "GAMEOVER":
-                        status = <div>
+                        cards = this.generateCards(teller.pickedCard)
+                    content = <div>
+                        <div>
                             <p>Game over</p>
                             <p>{teller.name} picked this card.</p>
                         </div>
-                        content = <div>
-                            {this.cardsWrapper([teller.pickedCard])}
-                            <button onClick={this.newRound}>New round</button>
-                        </div>
+                        {cards.elems}
+                        <button onClick={this.newRound}>New round</button>
+                    </div>
                         break
                 default:
-                    status = <div>
+                    content = <div>
                         <p>Something went wrong.</p>
                     </div>
                         break
             }
+
+        const { modalIsOpen, selectedIndex } = this.state;
+
         return(            
             <div id="gameField">
                 {status}
                 {keyword}
-                <SimpleReactLightbox>
-                    {content}
-                </SimpleReactLightbox>
+                {content}
+                <ModalGateway>
+                    {modalIsOpen ? (
+                        <Modal onClose={this.toggleModal}>
+                            <Carousel 
+                                views={cards.images}
+                                currentIndex={selectedIndex} 
+                            />
+                        </Modal>
+                    ) : null}
+                </ModalGateway>
             </div>
         ) 
     }

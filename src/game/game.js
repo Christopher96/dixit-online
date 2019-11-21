@@ -21,6 +21,7 @@ class Game extends Component {
         this.getGame()
     }
 
+
     getGame = () => {
         this.context.model
             .getGame(this.props.gameid)
@@ -55,19 +56,19 @@ class Game extends Component {
                             <GameField/>
                         </div>
                     </div>
-                break
+                    break
             case "LOADING":
                 content = 
                     <div className="center">
                         <div className="loader"></div> 
                     </div>
-                break
+                    break
             case "ERROR":
                 content = 
                     <div className="center">
                         <p className="notFound">404: {this.state.error}</p>
                     </div>
-                break
+                    break
             default:
                 content =
                     <div className="center">
@@ -75,7 +76,7 @@ class Game extends Component {
                     </div>
         }
 
-        return content
+        return content    
     }
 }
 

@@ -13,7 +13,12 @@
     text-align: center;
 }
 
-.gameCards > div {
+.gameCards {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+}
+
+.react-images__view-image {
+    padding: 5em;
 }
