@@ -12,6 +12,7 @@
 }
 
 #gameTitle {
+    text-decoration: underline;
     font-size: 30pt;
     opacity: 0.55;
     margin: 25px;

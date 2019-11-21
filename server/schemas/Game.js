@@ -15,14 +15,6 @@ const GameSchema = new Schema({
         type: Number,
         default: 0
     },
-    picker: {
-        type: Number,
-        default: 0
-    },
-    guesser: {
-        type: Number,
-        default: 1
-    },
     players: [
         PlayerSchema
     ]

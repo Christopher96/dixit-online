@@ -28,6 +28,10 @@
   100% { transform: rotate(360deg); }
 }
 
+.playerName {
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
 .center {
     display: flex;
     align-items: center;
@@ -39,8 +43,4 @@
 .notFound {
     color: white;
     font-size: 2em;
-}
-
-.players .current {
-    background-color: white;
 }

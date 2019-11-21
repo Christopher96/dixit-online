@@ -13,13 +13,12 @@ const filter = (s) => {
 
 module.exports.get_cards = async(count, query) => {
     try {
-        const data = await get('/search/photos', {
-            query,
-            page: 1,
-            per_page: count,
+        const images = await get("/photos/random", {
+            count,
             orientation: 'portrait'
         })
-        const cards = data.results.map(img => {
+
+        const cards = images.map(img => {
             return new Card({
                 color: img.color,
                 thumbnail: img.urls.thumb,
@@ -29,6 +28,7 @@ module.exports.get_cards = async(count, query) => {
         })
         return cards
     } catch(e) {
+        console.log(e)
         throw e;
     }
 }

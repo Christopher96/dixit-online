@@ -32,7 +32,7 @@ router.post('/create', (req, res, next) => {
                 return res.status(403).send(`Game with ID '${gameid}' already exists.`)
             } else {
                 let numPlayers = Object.keys(players).length
-                let cardsPerPlayer = 6
+                let cardsPerPlayer = 5
 
                 get_cards(numPlayers*cardsPerPlayer, query).then(cards => {
 

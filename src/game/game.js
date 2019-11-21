@@ -21,16 +21,34 @@ class Game extends Component {
         this.getGame()
     }
 
+    generateGame = (game) => {
+        const colors = [
+            "springgreen",
+            "crimson",
+            "deepskyblue",
+            "indigo",
+            "orangered",
+            "magenta",
+        ]
+
+        game.players.forEach((player, i) => {
+            player.name = <span style={{color: colors[i]}} className="playerName">{player.name}</span>
+        })
+
+        this.context.updateGame(game)
+
+        this.setState({
+            status: "LOADED"
+        })
+    }
+
 
     getGame = () => {
         this.context.model
             .getGame(this.props.gameid)
             .then(res => {
                 if(!res.error) {
-                    this.context.game = res
-                    this.setState({
-                        status: "LOADED"
-                    })
+                    this.generateGame(res)
                 } else {
                     this.setState({
                         error: res.error,

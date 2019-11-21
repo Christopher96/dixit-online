@@ -14,12 +14,15 @@ class GameField extends Component{
 
         context.toggleModal = this.toggleModal
         context.selectCard = this.selectCard
-        context.game.status = "PICKING"
 
         this.state = {
             modalIsOpen: false,
             keyword: context.game.keyword
         }
+    }
+
+    componentDidMount() {
+        this.startRound()
     }
 
     toggleModal = (selectedIndex) => {
@@ -164,9 +167,13 @@ class GameField extends Component{
 
     newRound = () => {
         this.next("teller")
+        this.startRound()
+    }
 
+    startRound = () => {
         let { game } = this.context
-        game.picker = game.teller
+
+        this.set("picker", game.teller)
         this.set("guesser", game.teller+1)
 
         game.keyword = null

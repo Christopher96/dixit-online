@@ -5,12 +5,25 @@
     width: 200px;
     display: flex;
     flex-direction: column;
+    cursor: pointer;
 }
 
 .gameCard img {
     border-radius: 1em;
     height: 100%;
     width: 100%;
+    border: 1px solid black;
+    box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.5);
+    transition: all 0.3s;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.gameCard:hover img {
+    box-shadow: 10px 10px 5px 5px rgba(0,0,0,0.5);
+    top: -10px;
+    left: -10px;
 }
 
 .expandButton {
