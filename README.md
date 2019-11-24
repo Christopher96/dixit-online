@@ -17,12 +17,12 @@ A lightweight back end server is run behind the scenes to store saved games and 
 #### Frameworks
 [React](https://reactjs.org/ "React") is the primary front end framework.
 
-[Lightbox](https://www.lokeshdhakar.com/projects/lightbox2/ "Lightbox") is used for expanding images.
+[Lightbox](https://www.npmjs.com/package/simple-react-lightbox "Simple React Lightbox") is used for expanding images.
 
 The back end server run on [Express](https://expressjs.com/ "Express"), [MongoDB](https://www.mongodb.com/ "MongoDB") and [Mongoose](https://mongoosejs.com/ "Mongoose").
 
 
-#### [Dixit Rules](https://unsplash.com/developers "Dixit Rules")
+#### [Dixit Rules](https://www.officialgamerules.org/dixit "Dixit Rules")
 
 The game is played in rounds. Every round is played as follows:
 Everybody adds cards to his hand to total of 6 cards. One storyteller is assigned. The storyteller picks a card from his hand and adds a line of description. The chosen card is placed face-down on the table and the line of description is made public.
