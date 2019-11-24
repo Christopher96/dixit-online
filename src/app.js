@@ -5,7 +5,6 @@ import { BrowserRouter } from "react-router-dom";
 import modelInstance from "data/DixitModel"
 import { GameProvider } from "context/gameContext"
 
-import GameInst from "gameInst/gameInst";
 import GameSetup from "gameSetup/gameSetup";
 import Game from "game/game";
 
