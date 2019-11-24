@@ -35,9 +35,7 @@ app.use(morgan('dev'))
 
 router.use('/games', require('./routes/games'))
 
-app.use('/test', require('./routes/populate'))
 app.use('/api', router)
-
 
 if(process.env.NODE_ENV === 'production') {
     // Serve the static files from the React app
