@@ -15,15 +15,22 @@
     opacity: 0.94;
 }
 
-#options {
+#setup {
+    position: absolute;
     height: 76vh;
     width: 70vw;
-    position: fixed;
     top: 50%;
     left: 50%;
     margin-top: calc(-38vh);
     margin-left: calc(-35vw);
+}
 
+.instructionsTxt {
+    padding: 20px 150px;
+    margin-bottom: 300px;
+}
+
+#options {
     display: grid;
     grid-template-rows: 1fr 4fr;
     grid-template-columns: 1fr 1fr;
@@ -33,25 +40,16 @@
     grid-column-gap: 20px;
 }
 
-#title {
-    grid-area: title;
-    font-family: 'dilana', serif;
-    font-size: 150pt;
-    text-align: center;
-    opacity: 0.9;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    line-height: 0.7em;
-    color: whitesmoke;
-    text-shadow: 0 0 20px white;
-}
-
 #newGame {
     grid-area: newGame;
 }
 
 #existingGame {
     grid-area: existingGame;
+}
+
+.howtoBtn {
+    margin-top: 50px !important;
 }
 
 .subTitle {
@@ -65,6 +63,7 @@
 }
 
 .setupButton {
+    cursor: pointer;
     display: block;
     margin: 10px auto;
     font-weight: bold;
@@ -87,20 +86,13 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: stretch;
+    justify-content: flex-end;
     margin: 5px 0;
     opacity: 0.8;
 }
 
 .formEntry:hover {
     opacity: 1;
-}
-
-.formEntry label {
-    flex: 0 0 auto;
-    opacity: 0.85;
-    color: whitesmoke;
-    text-shadow: 0 0 20px white;
 }
 
 .formEntry input {
@@ -140,7 +132,7 @@
 }
 
 #moon {
-    position: absolute;
+    position: fixed;
     height: 100%;
     top: -40%;
     left: -20%;

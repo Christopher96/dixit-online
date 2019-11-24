@@ -1,12 +1,4 @@
 class DixitModel {
-    jsonToQuery(json) {
-        return '?' + 
-            Object.keys(json).map(function(key) {
-                if(json[key]) return encodeURIComponent(key) + '=' +
-                    encodeURIComponent(json[key]);
-            }).join('&');
-    }
-
     processResponse(response) {
         if(response.code === 500)
             return {
@@ -19,12 +11,11 @@ class DixitModel {
             return {
                 error
             }
-        });
+        })
     }
 
-    get(path, params = {}) {
-        let url = path + this.jsonToQuery(params);
-        return fetch('/api'+url).then(this.processResponse);
+    get(path) {
+        return fetch('/api'+path).then(this.processResponse)
     }
 
     post(path, data = {}) {
@@ -34,16 +25,20 @@ class DixitModel {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
-        }).then(this.processResponse);
+        }).then(this.processResponse)
     }
 
-    createGame(gameid, players, query = 'landscape') {
-        return this.post('/games/create', { gameid, players, query });
+    createGame(gameid, players) {
+        return this.post('/games/create', { gameid, players })
+    }
+
+    saveGame(game) {
+        return this.post('/games/save', { game })
     }
 
     getGame(gameid) {
-        return this.get('/games/'+gameid);
+        return this.get('/games/'+gameid)
     }
 }
 
-export default new DixitModel();
+export default new DixitModel()

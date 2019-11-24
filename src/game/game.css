@@ -14,23 +14,23 @@
     grid-area: field;
 }
 
-.loader {
-  border: 16px solid #f3f3f3; 
-  border-top: 16px solid #3498db;
-  border-radius: 50%;
-  width: 120px;
-  height: 120px;
-  animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
 .playerName {
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
+
+.dixitTitle {
+    grid-area: title;
+    font-family: 'dilana', serif;
+    font-size: 150pt;
+    text-align: center;
+    opacity: 0.9;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    line-height: 0.7em;
+    color: whitesmoke;
+    text-shadow: 0 0 20px white;
+}
+
 
 .center {
     display: flex;
@@ -42,5 +42,5 @@
 
 .notFound {
     color: white;
-    font-size: 2em;
+    font-size: 30pt;
 }

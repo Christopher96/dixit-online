@@ -1,31 +1,3 @@
-.gameCard {
-    position: relative;
-    margin: 1em;
-    height: 300px;
-    width: 200px;
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
-}
-
-.gameCard img {
-    border-radius: 1em;
-    height: 100%;
-    width: 100%;
-    border: 1px solid black;
-    box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.5);
-    transition: all 0.3s;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-.gameCard:hover img {
-    box-shadow: 10px 10px 5px 5px rgba(0,0,0,0.5);
-    top: -10px;
-    left: -10px;
-}
-
 .expandButton {
     width: 1.5em;
     height: 1.5em;
@@ -51,4 +23,84 @@
 .expandButton svg {
     width: 100%;
     height: 100%;
+}
+
+.gameCard {
+}
+
+.gameCard {
+    position: relative;
+    margin: 1em;
+    height: 300px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    background-color: transparent;
+    perspective: 1000px; /* Remove this if you don't want the 3D effect */
+}
+
+/* This container is needed to position the front and back side */
+.gameCard-inner {
+    border-radius: 1em;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.gameCard.flipped .gameCard-inner {
+    transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.gameCard-front, .gameCard-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+.gameCard-front {
+    box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.5);
+    transition: all 0.3s;
+    position: absolute;
+    border-radius: 1em;
+    top: 0;
+    left: 0;
+}
+
+.gameCard-front img {
+    border: 1px solid black;
+    border-radius: 1em;
+    height: 100%;
+    width: 100%;
+}
+
+.gameCard:not(.flipped):hover .gameCard-front {
+    box-shadow: 10px 10px 5px 5px rgba(0,0,0,0.5);
+    top: -10px;
+    left: -10px;
+}
+
+/* Style the back side */
+.gameCard-back {
+    border: 1px solid black;
+    border-radius: 1em;
+    background-color: teal;
+    transform: rotateY(180deg);
+    background: url("../images/wooden_board_reduced.png") cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gameCard-back .dixitTitle {
+    font-size: 40pt;
+    transform: rotate(-40deg);
+    margin-top: -20px;
 }

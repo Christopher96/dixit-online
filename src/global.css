@@ -3,20 +3,31 @@
 @import url('https://fonts.googleapis.com/css?family=Handlee&display=swap');
 
 html, body {
+    background-color: #005257;
+    background-image: url("images/background_night_darker.png");
+    background-attachment: fixed;
     top: 0;
     height: 100%;
     width: 100%;
-    min-width: 100%;
-    min-height: 100%;
     margin: 0;
     padding: 0;
 }
 
-h1, h2, h3, h4, p, label, input, button, th, td {
+h1, h2, h3, h4, p, label, input, button, th, td, li, span {
     font-family: 'Handlee', cursive;
     margin: 0;
     font-size: 22pt;
 }
+
+#setup label,
+#setup span, 
+#setup p, 
+#setup li {
+    opacity: 0.85;
+    color: whitesmoke;
+    text-shadow: 0 0 20px white;
+}
+
 
 /* This is the exact font of the dixit board game */
 @font-face {
@@ -29,8 +40,11 @@ h1, h2, h3, h4, p, label, input, button, th, td {
 #root {
     height: 100%;
     width: 100%;
-    background-color: #005257;
-    background-image: url("images/background_night_darker.png");
+}
+
+#routes {
+    width: 100%;
+    height: 100%;
 }
 
 input[type="text"]{
@@ -46,5 +60,28 @@ button {
     border-radius: 8px;
     font-size: 20pt;
     color: black;
+    user-select: none;
+}
+
+.loader {
+  border: 16px solid #f3f3f3; 
+  border-top: 16px solid teal;
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+}
+
+.loader.small {
+  width: 40px;
+  height: 40px;
+}
+
+.loader.large {
+  width: 120px;
+  height: 120px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 

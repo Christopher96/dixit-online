@@ -17,6 +17,7 @@ class GameField extends Component{
 
         this.state = {
             modalIsOpen: false,
+            cardsHidden: true,
             keyword: context.game.keyword
         }
     }
@@ -24,6 +25,7 @@ class GameField extends Component{
     componentDidMount() {
         this.startRound()
     }
+
 
     toggleModal = (selectedIndex) => {
         this.setState(state => ({ 
@@ -33,6 +35,13 @@ class GameField extends Component{
     }
 
     selectCard = (card) => {
+        if(this.state.cardsHidden) {
+            this.setState({
+                cardsHidden: false
+            })
+            return
+        }
+
         let { game } = this.context
 
         switch(game.status) {
@@ -45,11 +54,15 @@ class GameField extends Component{
                 if(game.keyword == null) {
                     game.status = "KEYWORD"
                 } else {
-                    this.next("picker")
-
-                    if(game.picker === game.teller) {
-                        game.status = "GUESSING"
-                    } 
+                    this.setState({ cardsHidden: true })
+                    setTimeout(() => {
+                        this.next("picker")
+                        if(game.picker === game.teller) {
+                            game.status = "GUESSING"
+                            this.setState({ cardsHidden: false })
+                            this.context.updateGame(game)
+                        }                     
+                    }, 500)
                 } 
                 break
             case "GUESSING":
@@ -73,6 +86,7 @@ class GameField extends Component{
         game.keyword = this.state.keyword
         game.status = "PICKING"
         this.next("picker")
+        this.setState({ cardsHidden: true })
 
         this.context.updateGame(game)
     }
@@ -130,13 +144,12 @@ class GameField extends Component{
             const j = Math.floor(Math.random() * (i + 1));
             [array[i], array[j]] = [array[j], array[i]];
         }
+        return array;
     }
 
     generateCards = (cards) => {
         if(!Array.isArray(cards))
             cards = [cards]
-
-        console.log(cards)
 
         return {
             images: cards.map(card => {
@@ -146,7 +159,7 @@ class GameField extends Component{
                 }
             }),
             elems: <div className="gameCards">
-                {cards.map((card, i) => <GameCard key={i} index={i} card={card} />)}
+                {cards.map((card, i) => <GameCard key={i} index={i} card={card} hidden={this.state.cardsHidden} />)}
             </div>
         }
     }
@@ -165,9 +178,36 @@ class GameField extends Component{
         this.set(type, this.context.game[type]+1)
     }
 
+    saveGame = () => {
+        let { game } = this.context
+
+        this.setState({
+            status: "SAVING"
+        })
+
+        this.context.model
+            .saveGame(game)
+            .then(res => {
+                if(!res.error) {
+                    this.context.updateGame(res)
+                    this.startRound()
+                    this.setState({
+                        status: null
+                    })
+                } else {
+                    this.setState({
+                        error: res.error,
+                        status: "ERROR"
+                    })
+                }
+            })
+    }
     newRound = () => {
+        this.setState({
+            cardsHidden: true
+        })
         this.next("teller")
-        this.startRound()
+        this.saveGame()
     }
 
     startRound = () => {
@@ -182,62 +222,80 @@ class GameField extends Component{
         this.context.updateGame(game)
     }
 
-    render() {
-        let { game } = this.context
-        let teller = game.players[game.teller]
-        let picker = game.players[game.picker]
-        let guesser = game.players[game.guesser]
+    toggleCards = () => {
+        this.setState({
+            cardsHidden: !this.state.cardsHidden
+        })
+    }
 
-        let status = null
+    render() {
+        if(this.state.status === "SAVING") {
+            return (
+                <div id="gameField">
+                    <div class="loader large"></div>
+                </div>
+            )
+        }
+
+        const { game } = this.context
+        const teller = game.players[game.teller]
+        const picker = game.players[game.picker]
+        const guesser = game.players[game.guesser]
+
+        const { modalIsOpen, selectedIndex, cardsHidden } = this.state;
+
+        let keyword = (game.keyword == null) ? null : <p>The keyword is "{game.keyword}"</p>
+
+            let status = null
         let content = null
         let cards = null
 
-        let keyword = (teller !== picker) && <p>The keyword is "{game.keyword}"</p>
+        switch(game.status) {
+            case "PICKING":
+                cards = this.generateCards(picker.cards)
+                content = <div>
+                    <p>{picker.name}, which card to you want to pick?</p>
+                    {cards.elems}
+                    <button onClick={this.toggleCards}>{(cardsHidden) ? "Show cards" : "Hide cards"}</button>
+                </div>
+                    break
+            case "KEYWORD":
+                    keyword = null
+                cards = this.generateCards(picker.pickedCard)
+                content = <div>
+                    <p>What is your keyword?</p>
+                    <input type="text" onChange={e => this.setState({ keyword: e.target.value })} />
+                    <button onClick={this.changeKeyword}>ok</button>
+                    {cards.elems}
+                </div>
+                    break
+            case "GUESSING":
+                    let playerCards = this.shuffleArray(game.players.map(player => player.pickedCard))
+                cards = this.generateCards(playerCards)
+                content = <div>
+                    <p>{guesser.name}, which card has {teller.name} picked?</p>
+                    {cards.elems}
+                </div>
+                    break
 
-            switch(game.status) {
-                case "PICKING":
-                    cards = this.generateCards(picker.cards)
-                    content = <div>
-                        <p>{picker.name}, which card to you want to pick?</p>
-                        {cards.elems}
+            case "GAMEOVER":
+                    keyword = null
+                cards = this.generateCards(teller.pickedCard)
+                content = <div>
+                    <div>
+                        <p>Game over</p>
+                        <p>{teller.name} picked this card.</p>
                     </div>
-                        break
-                case "KEYWORD":
-                        cards = this.generateCards(picker.pickedCard)
-                    content = <div>
-                        <p>What is your keyword?</p>
-                        <input type="text" onChange={e => this.setState({ keyword: e.target.value })} />
-                        <button onClick={this.changeKeyword}>ok</button>
-                        {cards.elems}
-                    </div>
-                        break
-                case "GUESSING":
-                        cards = this.generateCards(game.players.map(player => player.pickedCard))
-                    content = <div>
-                        <p>{guesser.name}, which card has {teller.name} picked?</p>
-                        {cards.elems}
-                    </div>
-                        break
-
-                case "GAMEOVER":
-                        cards = this.generateCards(teller.pickedCard)
-                    content = <div>
-                        <div>
-                            <p>Game over</p>
-                            <p>{teller.name} picked this card.</p>
-                        </div>
-                        {cards.elems}
-                        <button onClick={this.newRound}>New round</button>
-                    </div>
-                        break
-                default:
-                    content = <div>
-                        <p>Something went wrong.</p>
-                    </div>
-                        break
-            }
-
-        const { modalIsOpen, selectedIndex } = this.state;
+                    {cards.elems}
+                    <button onClick={this.newRound}>New round</button>
+                </div>
+                    break
+            case "ERROR":
+                content = <div>
+                    <p>{this.state.error}</p>
+                </div>
+                    break
+        }
 
         return(            
             <div id="gameField">

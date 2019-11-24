@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import modelInstance from "data/DixitModel"
 import { GameProvider } from "context/gameContext"
 
+import GameInst from "gameInst/gameInst";
 import GameSetup from "gameSetup/gameSetup";
 import Game from "game/game";
 
@@ -22,6 +23,18 @@ class App extends Component {
             model: modelInstance,
             game: null,
             updateGame: (game) => {
+                const colors = [
+                    "springgreen",
+                    "crimson",
+                    "deepskyblue",
+                    "indigo",
+                    "orangered",
+                    "magenta",
+                ]
+
+                game.players.forEach((player, i) => {
+                    player.name = <span style={{color: colors[i]}} className="playerName">{player.name}</span>
+                })
                 this.setState({ game })
             }
         }

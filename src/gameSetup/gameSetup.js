@@ -11,6 +11,7 @@ class GameSetup extends Component{
     constructor(props) {
         super(props);
         this.state = {
+            showInstructions: false,
             createError: "",
             createGameName: "",
             continueError: "",
@@ -38,7 +39,6 @@ class GameSetup extends Component{
             })
             return
         }
-        // TODO: fix this such that empty names are not allowed
         for (let name of this.state.players) {
             if (name.replace(/\s/g, '') === '') {
                 this.setState({
@@ -61,6 +61,12 @@ class GameSetup extends Component{
     }
 
     continueGame = (e) => {
+        if (this.state.continueGameName.replace(/\s/g, '') === '') {
+            this.setState({
+                continueError: "Name of game can't be empty."
+            })
+            return
+        }
         this.context.model
             .getGame(this.state.continueGameName)
             .then(res => {
@@ -112,7 +118,7 @@ class GameSetup extends Component{
             <div className='formEntry playerName' key={index}>
                 <label htmlFor={`player${index}`}>Player {index + 1}:</label>
                 <input type='text' id={`player${index}`} value={name} key={index}
-                       onChange={this.changePlayerName(index)}/>
+                    onChange={this.changePlayerName(index)}/>
                 {removeButton}
             </div>
         )
@@ -122,54 +128,68 @@ class GameSetup extends Component{
         return this.state.players.map(this.playerInfo)
     }
 
+    toggleInstructions = (state) => {
+        this.setState({
+            showInstructions: state
+        })
+    }
+
 
     render() {
         let addButton = (this.state.players.length < 6) ? <button id='addButton' onClick={this.addPlayer}>+ add player</button> : '';
-        /* <img src={cloud} alt="wooden board" id='board'/> */
         return (
             <div id='setup'>
                 <div id='stars'>
                 </div>
                 <img id='moon' src={moon} alt=''/>
-                <div id='options'>
-                    <p id='title'>Dixit</p>
-                    <div id='newGame'>
-                        <p className='subTitle'>Create a new game</p>
-                        <div className='formEntry'>
-                            <label htmlFor='gameName'>Name of game:</label>
-                            <input onChange={this.change} name='createGameName' type='text'/>
+                { !this.state.showInstructions ? (
+                    <div id='options'>
+                        <p className='dixitTitle'>Dixit</p>
+                        <div id='newGame'>
+                            <p className='subTitle'>Create a new game</p>
+                            <div className='formEntry'>
+                                <label htmlFor='gameName'>Name of game:</label>
+                                <input onChange={this.change} name='createGameName' type='text'/>
+                            </div>
+
+                            {this.playersInfos()}
+
+                            <div className="formEntry">
+                                {addButton}
+                            </div>
+                            <div className='formEntry'>
+                                <button className='setupButton' onClick={this.createGame}>Create game</button>
+                            </div>
+                            <p className="error">{this.state.createError}</p>
                         </div>
-
-                        {this.playersInfos()}
-
-                        <div id='themeSelector' className='formEntry'>
-                            <label htmlFor='theme'>theme:</label>
-                            <select id='theme' name='theme'>
-                                <option value='landscapes'>landscapes</option>
-                                <option value='animals'>animals</option>
-
-                            </select>
-                            <span/>
-                            {addButton}
+                        <div id='existingGame'>
+                            <p className='subTitle'>Continue existing game</p>
+                            <div className='formEntry'>
+                                <label htmlFor='gameName'>Name of game:</label>
+                                <input onChange={this.change} name='continueGameName' type='text'/>
+                            </div>
+                            <div className='formEntry'>
+                                <button className='setupButton' onClick={this.continueGame}>Continue game</button>
+                            </div>
+                            <p className="error">{this.state.continueError}</p>
+                            <button className='howtoBtn setupButton' onClick={() => this.toggleInstructions(true)}>How to play the game ></button>
                         </div>
-
-                        <div className='formEntry'>
-                            <button className='setupButton' onClick={this.createGame}>Create game</button>
-                        </div>
-                        <p className="error">{this.state.createError}</p>
                     </div>
-                    <div id='existingGame'>
-                        <p className='subTitle'>Continue existing game</p>
-                        <div className='formEntry'>
-                            <label htmlFor='gameName'>Name of game:</label>
-                            <input onChange={this.change} name='continueGameName' type='text'/>
-                        </div>
-                        <div className='formEntry'>
-                            <button className='setupButton' onClick={this.continueGame}>Continue game</button>
-                        </div>
-                        <p className="error">{this.state.continueError}</p>
+                ) : (
+                    <div id="instructions">
+                        <p className='dixitTitle'>Dixit</p>
+                        <div className="instructionsTxt">
+                            <span>The game is played in rounds. Every round is played as follows: Everybody adds cards to his hand to total of 6 cards. One storyteller is assigned. The storyteller picks a card from his hand and adds a line of description. The chosen card is placed face-down on the table and the line of description is made public. The other players all choose a card from their hand that best fits that same description. The cards are shuffled and placed face-up on the table. Now all the non-storyteller players chose the card which they think is the original card of the storyteller. One the count of three all the players reveal their choice. Now points are divided:</span>
+                            <ul>
+                                <li>If everybody correctly guessed the storyteller’s card or if nobody guessed the storyteller’s card, then the storyteller receives no points and all the other players receive 2 points.</li>
+                                <li>Otherwise the storyteller receives 3 points and every player who correctly guessed the storyteller’s card receives 3 points.</li>
+                                <li>Every non-storyteller player receives 1 point for every vote on their card.</li>
+                            </ul>
+                            <span>Therefore, as a storyteller you want to a description that is vague enough that not everybody guesses the card, but precise enough that at least one person guesses the card. The game continues for either a predefined number of rounds or until someone reaches a retrain score.</span>
+                            <button className="setupButton" onClick={() => this.toggleInstructions(false)}>&lt; Go back</button>
+                        </div>    
                     </div>
-                </div>
+                )}
             </div>
         )
     }

@@ -11,7 +11,7 @@ const filter = (s) => {
 }
 
 
-module.exports.get_cards = async(count, query) => {
+module.exports.get_cards = async(count) => {
     try {
         const images = await get("/photos/random", {
             count,
