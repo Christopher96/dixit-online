@@ -1,7 +1,25 @@
 # Dixit Online
 
+
+#### How to run the application
+Start a mongodb instance on port 4000:
+```
+sudo mongodb --port 4000
+```
+Clone the repository, install packages:
+```
+git clone https://github.com/Christopher96/dixit-online
+npm install
+```
+Start the backend server and the frontend app in different terminals:
+```
+npm run server
+npm start
+```
+
 #### Description
 An online version of the game Dixit. It will be played on a single computer in the web browser. Rules of the game are written below. 
+
 
 #### Deployed app
 The app is deployed with [Heroku](https://dashboard.heroku.com "Heroku") at:
